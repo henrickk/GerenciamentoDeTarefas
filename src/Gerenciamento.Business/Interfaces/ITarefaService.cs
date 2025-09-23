@@ -1,8 +1,8 @@
-﻿using Projeto.Business.Models;
+﻿using Gerenciamento.Business.Models;
 
-namespace Projeto.Business.Interfaces
+namespace Gerenciamento.Business.Interfaces
 {
-    public interface ITarefaService
+    public interface ITarefaService : IDisposable
     {
         Task Adicionar(Tarefa tarefa);
         Task Atualizar(Tarefa tarefa);

@@ -1,4 +1,4 @@
-﻿namespace Projeto.Business.Models
+﻿namespace Gerenciamento.Business.Models
 {
     public class Usuario
     {

@@ -2,7 +2,7 @@
 
 namespace Gerenciamento.Business.Interfaces
 {
-    public interface IUsuarioService
+    public interface IUsuarioService : IDisposable
     {
         Task Adicionar(Usuario usuario);
         Task Atualizar(Usuario usuario);

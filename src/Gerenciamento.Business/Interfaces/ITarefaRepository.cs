@@ -2,10 +2,24 @@
 
 namespace Gerenciamento.Business.Interfaces
 {
-    public interface ITarefaRepository : IDisposable
+    public interface ITarefaRepository : IRepository<Tarefa>
     {
-        Task Adicionar(Tarefa tarefa);
-        Task Atualizar(Tarefa tarefa);
-        Task Remover(Guid id);
+        Task<Tarefa> ObterTarefaProjetoUsuario(Guid id);
+
+        Task<IEnumerable<Tarefa>> ObterTarefasPorProjeto(Guid projetoId);
+
+        Task<IEnumerable<Tarefa>> ObterTarefasPorUsuario(Guid usuarioId);
+
+        Task<IEnumerable<Tarefa>> ObterTarefasAtrasadas();
+
+        Task<IEnumerable<Tarefa>> ObterTarefasConcluidas();
+
+        Task<IEnumerable<Tarefa>> ObterTarefasPendentes();
+
+        Task<IEnumerable<Tarefa>> ObterTarefasPorStatus(string status);
+
+        Task<IEnumerable<Tarefa>> ObterTarefasPorPrioridade(string prioridade);
+
+
     }
 }
