@@ -17,12 +17,6 @@ namespace Gerenciamento.Business.Interfaces
 
         Task<IEnumerable<Projeto>> ObterProjetosComTarefasConcluidas();
 
-        Task<IEnumerable<Projeto>> ObterProjetosComTarefasPendentes();
-
-        Task<IEnumerable<Projeto>> ObterProjetosComTarefasPorStatus(string status);
-
         Task<IEnumerable<Projeto>> ObterProjetosComTarefasPorPrioridade(string prioridade);
-
-
     }
 }
