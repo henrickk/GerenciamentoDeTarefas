@@ -31,6 +31,7 @@ namespace Gerenciamento.Business.Services
                 Notificar("Já existe um projeto com este nome.");
                 return;
             }
+            await _projetoRespository.Atualizar(projeto);
         }
 
         public async Task Remover(Guid id)
