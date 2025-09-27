@@ -5,15 +5,10 @@ namespace Gerenciamento.Business.Interfaces
     public interface IProjetoRepository : IRepository<Projeto>
     {
         Task<Projeto> ObterProjetoUsuario(Guid id);
-        Task<Projeto> ObterProjetoTarefasUsuarios(Guid id);
-
-        Task<IEnumerable<Projeto>> ObterProjetosPorUsuario(Guid usuarioId);
 
         Task<IEnumerable<Projeto>> ObterProjetosComTarefas();
 
         Task<IEnumerable<Projeto>> ObterProjetosComTarefasEUsuarios();
-
-        Task<IEnumerable<Projeto>> ObterProjetosComTarefasAtrasadas();
 
         Task<IEnumerable<Projeto>> ObterProjetosComTarefasConcluidas();
 
