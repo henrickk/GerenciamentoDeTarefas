@@ -6,20 +6,12 @@ namespace Gerenciamento.Business.Interfaces
     {
         Task<Tarefa> ObterTarefaProjetoUsuario(Guid id);
 
-        Task<IEnumerable<Tarefa>> ObterTarefasPorProjeto(Guid projetoId);
-
         Task<IEnumerable<Tarefa>> ObterTarefasPorUsuario(Guid usuarioId);
-
-        Task<IEnumerable<Tarefa>> ObterTarefasAtrasadas();
 
         Task<IEnumerable<Tarefa>> ObterTarefasConcluidas();
 
         Task<IEnumerable<Tarefa>> ObterTarefasPendentes();
 
         Task<IEnumerable<Tarefa>> ObterTarefasPorStatus(string status);
-
-        Task<IEnumerable<Tarefa>> ObterTarefasPorPrioridade(string prioridade);
-
-
     }
 }

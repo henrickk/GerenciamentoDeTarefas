@@ -1,6 +1,6 @@
 ﻿namespace Gerenciamento.Business.Models
 {
-    public class Tarefa
+    public class Tarefa : Entity
     {
         public Guid Id { get; set; }
         public string Titulo { get; set; }
