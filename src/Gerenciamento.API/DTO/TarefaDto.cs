@@ -15,8 +15,9 @@ namespace Gerenciamento.API.DTO
         [StringLength(1000, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string Descricao { get; set; }
 
-        public string Status { get; set; } // Pendente, Em Andamento, Concluída
+        public string NomeUsuario { get; set; }
 
+        public string Status { get; set; } // Pendente, Em Andamento, Concluída
 
         public string Prioridade { get; set; } // Baixa, Média, Alta
 

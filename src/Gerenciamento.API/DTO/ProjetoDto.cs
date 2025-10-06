@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Gerenciamento.API.DTO
 {
-    public class ProjtoDto
+    public class ProjetoDto
     {
         public Guid Id { get; set; }
 
