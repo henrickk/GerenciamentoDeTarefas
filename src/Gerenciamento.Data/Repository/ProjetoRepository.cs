@@ -18,6 +18,11 @@ namespace Gerenciamento.Data.Repository
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Projeto>> ObterProjetos()
+        {
+            return await Db.Projetos.AsNoTracking().ToListAsync();
+        }
+
         public async Task<IEnumerable<Projeto>> ObterProjetosComTarefasConcluidas()
         {
             return await Db.Projetos.AsNoTracking().Include(p => p.DataConclusao.Value).ToListAsync();

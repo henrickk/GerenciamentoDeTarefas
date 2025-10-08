@@ -1,3 +1,4 @@
+using Gerenciamento.API.Configurations;
 using Gerenciamento.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<MeuDbContext>(options =>
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.ResolvendoDependencies(); 
+    
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

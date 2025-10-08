@@ -10,6 +10,11 @@ namespace Gerenciamento.Data.Repository
         public TarefaRepository(MeuDbContext context) : base(context) { 
         }
 
+        public async Task<IEnumerable<Tarefa>> ObterTarefas()
+        {
+            return await Db.Tarefas.AsNoTracking().ToListAsync();
+        }
+
         public async Task<Tarefa> ObterTarefaProjetoUsuario(Guid id)
         {
             return await Db.Tarefas.AsNoTracking().Include(t => t.Usuario).FirstOrDefaultAsync(t => t.Id == id);

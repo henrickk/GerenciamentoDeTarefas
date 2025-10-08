@@ -22,7 +22,7 @@ namespace Gerenciamento.Data.Repository
         public async Task<Usuario> ObterUsuarioPorEmail(string email)
         {
             return Db.Usuarios.AsNoTracking().FirstOrDefault(u => u.Email == email);
-        }9
+        }
 
         public async Task<IEnumerable<Usuario>> ObterUsuariosComProjetosETarefasConcluidas()
         {
