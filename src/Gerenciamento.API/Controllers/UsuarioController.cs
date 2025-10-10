@@ -1,5 +1,4 @@
-﻿using Gerenciamento.API.DTO;
-using Gerenciamento.Business.Interfaces;
+﻿using Gerenciamento.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gerenciamento.API.Controllers

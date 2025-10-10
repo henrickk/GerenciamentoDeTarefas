@@ -1,7 +1,6 @@
 using Gerenciamento.API.Configurations;
 using Gerenciamento.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 

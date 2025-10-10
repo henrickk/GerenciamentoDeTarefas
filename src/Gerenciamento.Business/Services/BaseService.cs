@@ -1,5 +1,6 @@
-﻿using Gerenciamento.Business.Interfaces;
+﻿using FluentValidation;
 using FluentValidation.Results;
+using Gerenciamento.Business.Interfaces;
 
 namespace Gerenciamento.Business.Services
 {
@@ -25,5 +26,14 @@ namespace Gerenciamento.Business.Services
             _notificador.Handle(new Notificacoes.Notificacao(mensagem));
         }
 
+        protected bool ExecutarValidacao<TV, TE>(TV validacao, TE entidade)
+            where TV : AbstractValidator<TE>
+            where TE : class
+        {
+            var validator = validacao.Validate(entidade);
+            if (validator.IsValid) return true;
+            Notificar(validator);
+            return false;
+        }
     }
 }
