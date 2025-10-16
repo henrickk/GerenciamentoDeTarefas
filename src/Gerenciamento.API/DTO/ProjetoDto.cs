@@ -22,8 +22,5 @@ namespace Gerenciamento.API.DTO
         public DateTime? DataConclusao { get; set; }
 
         public string NomeUsuario { get; set; }
-
-        //Relacao EF
-        public Usuario Usuario { get; set; }
     }
 }

@@ -14,10 +14,12 @@ namespace Gerenciamento.API.Configurations
             services.AddScoped<MeuDbContext>();
             services.AddScoped<IProjetoRepository, ProjetoRepository>();
             services.AddScoped<ITarefaRepository, TarefaRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
             //Business 
             services.AddScoped<IProjetoService, ProjetoService>();
             services.AddScoped<ITarefaService, TarefaService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<INotificador, Notificador>();
 
             return services;

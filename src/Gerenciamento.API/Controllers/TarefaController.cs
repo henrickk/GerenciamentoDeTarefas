@@ -25,12 +25,14 @@ namespace Gerenciamento.API.Controllers
         }
 
         [HttpGet]
+        [Route("consultar-tarefa")]
         public async Task<IEnumerable<TarefaDto>> ObterTodos()
         {
             return _mapper.Map<IEnumerable<TarefaDto>>(await _tarefaRepository.ObterTarefas());
         }
 
-        [HttpGet("{id:guid}")]
+        [HttpGet]
+        [Route("consultar-tarefa-por-id/{id:guid}")]
         public async Task<ActionResult<TarefaDto>> ObterPorId(Guid id)
         {
             var tarefasDto = await ObterPorId(id);
@@ -41,6 +43,7 @@ namespace Gerenciamento.API.Controllers
         }
 
         [HttpPost]
+        [Route("adicionar-tarefa")]
         public async Task<ActionResult<TarefaDto>> Adicionar(TarefaDto tarefaDto)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
@@ -50,7 +53,8 @@ namespace Gerenciamento.API.Controllers
             return CustomResponse(HttpStatusCode.Created, tarefaDto);
         }
 
-        [HttpPut("{id:guid}")]
+        [HttpPut]
+        [Route("atualizar-tarefa/{id:guid}")]
         public async Task<ActionResult<TarefaDto>> Atualizar(Guid id, TarefaDto tarefaDto)
         {
             if (id != tarefaDto.Id)
@@ -74,7 +78,8 @@ namespace Gerenciamento.API.Controllers
             return CustomResponse(HttpStatusCode.NoContent);
         }
 
-        [HttpDelete("{id:guid}")]
+        [HttpDelete]
+        [Route("excluir-tarefa/{id:guid}")]
         public async Task<ActionResult<TarefaDto>> Excluir(Guid id)
         {
             var tarefa = await ObterTarefaProjeto(id);

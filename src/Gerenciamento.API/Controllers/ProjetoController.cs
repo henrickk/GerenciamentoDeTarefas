@@ -24,23 +24,39 @@ namespace Gerenciamento.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet] 
-        public async Task<IEnumerable<ProjetoDto>> ObterTodos()
+        //[HttpGet]
+        //[Route("consultar-projeto"]
+        //public async Task<IEnumerable<Projeto>> ObterTodos()
+        //{
+        //    var projeto = await _projetoRepository.ObterProjetos();
+
+        //    return _mapper.Map<IEnumerable<Projeto>>(projeto);
+        //}
+
+        [HttpGet]
+        [Route("consultar-projeto")]
+        public async Task<ActionResult<IEnumerable<ProjetoDto>>> ObterTodos()
         {
-            return _mapper.Map<IEnumerable<ProjetoDto>>(await _projetoRepository.ObterProjetos());
+            var projetos = await _projetoRepository.ObterProjetos();
+            var projetosDto = _mapper.Map<IEnumerable<ProjetoDto>>(projetos);
+
+            return CustomResponse(HttpStatusCode.Continue, projetosDto);
         }
 
-        [HttpGet("{id:guid}")]
+
+        [HttpGet]
+        [Route("consultar-projeto/{id:guid}")]
         public async Task<ActionResult<ProjetoDto>> ObterPorId(Guid id)
         {
-            var produtoDto = await ObterProjeto(id);
+            var projetoDto = await ObterProjeto(id);
 
-            if (produtoDto == null) return NotFound();
+            if (projetoDto == null) return NotFound();
 
-            return produtoDto;
+            return projetoDto;
         }
 
         [HttpPost]
+        [Route("cadastrar-projeto")]
         public async Task<ActionResult<ProjetoDto>> Adicionar(ProjetoDto projetoDto)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
@@ -50,7 +66,8 @@ namespace Gerenciamento.API.Controllers
             return CustomResponse(HttpStatusCode.Created, projetoDto);
         }
 
-        [HttpPut("{id:guid}")]
+        [HttpPut]
+        [Route("atualizar-projeto/{id:guid}")]
         public async Task<ActionResult<ProjetoDto>> Atualizar(Guid id, ProjetoDto projetoDto)
         {
             if (id != projetoDto.Id)
@@ -73,7 +90,8 @@ namespace Gerenciamento.API.Controllers
             return CustomResponse();
         }
 
-        [HttpDelete("{id:guid}")]
+        [HttpDelete]
+        [Route("Excluir-projeto/{id:guid}")]
         public async Task<ActionResult<ProjetoDto>> Excluir(Guid id)
         {
             var projeto = await ObterProjeto(id);

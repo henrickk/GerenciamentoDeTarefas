@@ -26,7 +26,5 @@ namespace Gerenciamento.API.DTO
         public string Role { get; set; } = "User";
 
         public DateTime DataCadastro { get; set; }
-        public ICollection<Projeto> Projetos { get; set; }
-        public ICollection<Tarefa> Tarefas { get; set; }
     }
 }
