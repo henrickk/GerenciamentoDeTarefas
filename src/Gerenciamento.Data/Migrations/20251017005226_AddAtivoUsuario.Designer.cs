@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gerenciamento.Data.Migrations
 {
     [DbContext(typeof(MeuDbContext))]
-    [Migration("20250925020550_Initial")]
-    partial class Initial
+    [Migration("20251017005226_AddAtivoUsuario")]
+    partial class AddAtivoUsuario
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,6 +106,9 @@ namespace Gerenciamento.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("DataCadastro")
                         .HasColumnType("datetime2");

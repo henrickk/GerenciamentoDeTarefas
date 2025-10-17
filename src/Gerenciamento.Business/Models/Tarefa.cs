@@ -13,5 +13,6 @@
         public Projeto Projeto { get; set; }
         public Guid UsuarioId { get; set; } // Responsável
         public Usuario Usuario { get; set; }
+        public string NomeUsuario { get; set; } = string.Empty;
     }
 }

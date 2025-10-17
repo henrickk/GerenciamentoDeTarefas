@@ -40,7 +40,8 @@ namespace Gerenciamento.API.Controllers
             var projetos = await _projetoRepository.ObterProjetos();
             var projetosDto = _mapper.Map<IEnumerable<ProjetoDto>>(projetos);
 
-            return CustomResponse(HttpStatusCode.Continue, projetosDto);
+            return Ok(projetosDto);
+            
         }
 
 
@@ -57,13 +58,13 @@ namespace Gerenciamento.API.Controllers
 
         [HttpPost]
         [Route("cadastrar-projeto")]
-        public async Task<ActionResult<ProjetoDto>> Adicionar(ProjetoDto projetoDto)
+        public async Task<ActionResult<ProjetoDto>> Adicionar(CadastroProjetoDto cadastroProjetoDto)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _projetoService.Adicionar(_mapper.Map<Projeto>(projetoDto));
+            await _projetoService.Adicionar(_mapper.Map<Projeto>(cadastroProjetoDto));
 
-            return CustomResponse(HttpStatusCode.Created, projetoDto);
+            return CustomResponse(HttpStatusCode.Created, cadastroProjetoDto);
         }
 
         [HttpPut]
@@ -81,7 +82,7 @@ namespace Gerenciamento.API.Controllers
             var atualizacaoProjeto = await ObterProjeto(id);
 
             atualizacaoProjeto.UsuarioId = projetoDto.UsuarioId;
-            atualizacaoProjeto.Nome = projetoDto.Nome;
+            atualizacaoProjeto.NomeProjeto = projetoDto.NomeProjeto;
             atualizacaoProjeto.Descricao = projetoDto.Descricao;
             atualizacaoProjeto.DataConclusao = projetoDto.DataConclusao;
 

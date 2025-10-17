@@ -6,6 +6,6 @@ namespace Gerenciamento.Business.Interfaces
     {
         Task Adicionar(Usuario usuario);
         Task Atualizar(Usuario usuario);
-        Task Remover(Guid id);
+        Task Inativar(Guid id);
     }
 }

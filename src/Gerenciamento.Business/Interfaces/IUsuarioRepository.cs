@@ -13,5 +13,7 @@ namespace Gerenciamento.Business.Interfaces
         Task<IEnumerable<Usuario>> ObterUsuariosComTarefas();
 
         Task<IEnumerable<Usuario>> ObterUsuariosComProjetosETarefasConcluidas();
+        Task Inativar(Guid id);
+
     }
 }

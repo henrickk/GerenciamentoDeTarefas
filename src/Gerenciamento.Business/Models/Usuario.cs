@@ -1,4 +1,6 @@
-﻿namespace Gerenciamento.Business.Models
+﻿using Gerenciamento.Business.Models;
+
+namespace Gerenciamento.Business.Models
 {
     public class Usuario : Entity
     {
@@ -8,8 +10,8 @@
         public string SenhaHash { get; set; }
 
         public string Role { get; set; } = "User";
-
         public DateTime DataCadastro { get; set; }
+        public bool Ativo { get; set; } = true;
         public ICollection<Projeto> Projetos { get; set; }
         public ICollection<Tarefa> Tarefas { get; set; }
     }

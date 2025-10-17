@@ -33,5 +33,15 @@ namespace Gerenciamento.Data.Repository
         {
             return await Db.Usuarios.AsNoTracking().Include(u => u.Tarefas).ToListAsync();
         }
+
+        public async Task Inativar(Guid id)
+        {
+            var entity = await Db.Usuarios.FindAsync(id);
+            if (entity == null) return; // ou Notificar
+
+            entity.Ativo = false;
+            await SaveChanges();
+        }
+
     }
 }

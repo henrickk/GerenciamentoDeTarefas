@@ -34,9 +34,9 @@ namespace Gerenciamento.Business.Services
             await _usuarioRepository.Atualizar(usuario);
         }
 
-        public async Task Remover(Guid id)
+        public async Task Inativar(Guid id)
         {
-            await _usuarioRepository.Remover(id);
+            await _usuarioRepository.Inativar(id);
         }
 
         public void Dispose()

@@ -13,15 +13,21 @@ namespace Gerenciamento.API.Controllers
         private readonly ITarefaRepository _tarefaRepository;
         private readonly ITarefaService _tarefaService;
         private readonly IMapper _mapper;
+        private readonly IUsuarioRepository _usarioRepository;
+        private readonly IUsuarioService _usuarioService;
 
         public TarefaController(ITarefaRepository tarefaRepository,
                                  ITarefaService tarefaService,
                                  IMapper mapper,
-                                 INotificador notificador) : base(notificador) 
+                                 IUsuarioRepository usarioRepository,
+                                 IUsuarioService usuarioService,
+                                 INotificador notificador) : base(notificador)
         {
             _tarefaRepository = tarefaRepository;
             _tarefaService = tarefaService;
             _mapper = mapper;
+            _usarioRepository = usarioRepository;
+            _usuarioService = usuarioService;
         }
 
         [HttpGet]
@@ -44,13 +50,23 @@ namespace Gerenciamento.API.Controllers
 
         [HttpPost]
         [Route("adicionar-tarefa")]
-        public async Task<ActionResult<TarefaDto>> Adicionar(TarefaDto tarefaDto)
+        public async Task<ActionResult<TarefaDto>> Adicionar(CadastroTarefaDto cadastroTarefaDto)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _tarefaService.Adicionar(_mapper.Map<Tarefa>(tarefaDto));
+            var usuario = await _usarioRepository.ObterPorId(cadastroTarefaDto.UsuarioId);
+            
+            if (usuario == null)
+            {
+                NotificarErro("Usuário não encontrado!");
+                return CustomResponse();
+            }
 
-            return CustomResponse(HttpStatusCode.Created, tarefaDto);
+            cadastroTarefaDto.NomeUsuario = usuario.Nome;
+
+            await _tarefaService.Adicionar(_mapper.Map<Tarefa>(cadastroTarefaDto));
+
+            return CustomResponse(HttpStatusCode.Created, cadastroTarefaDto);
         }
 
         [HttpPut]

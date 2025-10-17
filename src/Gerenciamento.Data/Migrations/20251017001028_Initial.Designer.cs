@@ -4,6 +4,7 @@ using Gerenciamento.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gerenciamento.Data.Migrations
 {
     [DbContext(typeof(MeuDbContext))]
-    partial class MeuDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251017001028_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,10 +74,6 @@ namespace Gerenciamento.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(1000)");
 
-                    b.Property<string>("NomeUsuario")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
-
                     b.Property<string>("Prioridade")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
@@ -107,9 +106,6 @@ namespace Gerenciamento.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("DataCadastro")
                         .HasColumnType("datetime2");
