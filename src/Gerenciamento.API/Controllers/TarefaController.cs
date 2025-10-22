@@ -41,11 +41,11 @@ namespace Gerenciamento.API.Controllers
         [Route("consultar-tarefa-por-id/{id:guid}")]
         public async Task<ActionResult<TarefaDto>> ObterPorId(Guid id)
         {
-            var tarefasDto = await ObterPorId(id);
+            var tarefasDto = await ObterTarefaProjeto(id);
 
             if (tarefasDto == null) return NotFound();
 
-            return tarefasDto;
+            return CustomResponse(HttpStatusCode.OK, tarefasDto);
         }
 
         [HttpPost]
@@ -55,7 +55,7 @@ namespace Gerenciamento.API.Controllers
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var usuario = await _usarioRepository.ObterPorId(cadastroTarefaDto.UsuarioId);
-            
+
             if (usuario == null)
             {
                 NotificarErro("Usuário não encontrado!");

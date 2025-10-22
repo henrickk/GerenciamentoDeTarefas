@@ -24,15 +24,6 @@ namespace Gerenciamento.API.Controllers
             _mapper = mapper;
         }
 
-        //[HttpGet]
-        //[Route("consultar-projeto"]
-        //public async Task<IEnumerable<Projeto>> ObterTodos()
-        //{
-        //    var projeto = await _projetoRepository.ObterProjetos();
-
-        //    return _mapper.Map<IEnumerable<Projeto>>(projeto);
-        //}
-
         [HttpGet]
         [Route("consultar-projeto")]
         public async Task<ActionResult<IEnumerable<ProjetoDto>>> ObterTodos()
@@ -43,7 +34,6 @@ namespace Gerenciamento.API.Controllers
             return Ok(projetosDto);
             
         }
-
 
         [HttpGet]
         [Route("consultar-projeto/{id:guid}")]
