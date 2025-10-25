@@ -5,7 +5,7 @@ namespace Gerenciamento.Business.Models
     public class Usuario : Entity
     {
         public Guid Id { get; set; }
-        public string Nome { get; set; }
+        public string Nome { get; set; } = string.Empty;
         public string Email { get; set; }
         public string SenhaHash { get; set; }
 

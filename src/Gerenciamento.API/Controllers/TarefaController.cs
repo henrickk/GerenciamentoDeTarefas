@@ -41,7 +41,7 @@ namespace Gerenciamento.API.Controllers
         [Route("consultar-tarefa-por-id/{id:guid}")]
         public async Task<ActionResult<TarefaDto>> ObterPorId(Guid id)
         {
-            var tarefasDto = await ObterTarefaProjeto(id);
+            var tarefasDto = await ObterPorId(id);
 
             if (tarefasDto == null) return NotFound();
 

@@ -20,7 +20,20 @@ namespace Gerenciamento.Data.Repository
 
         public async Task<IEnumerable<Projeto>> ObterProjetos()
         {
-            return await Db.Projetos.AsNoTracking().ToListAsync();
+            return await Db.Projetos.AsNoTracking()
+                .Include(p => p.Usuario)
+                .Include(p => p.Tarefas)
+                    .ThenInclude(t => t.Usuario)
+                .ToListAsync();
+        }
+
+        public async Task<Projeto> ObterPorId(Guid id)
+        {
+            return await Db.Projetos.AsNoTracking()
+                .Include(p => p.Usuario)
+                .Include(p => p.Tarefas)
+                    .ThenInclude(t => t.Usuario)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<IEnumerable<Projeto>> ObterProjetosComTarefasConcluidas()
@@ -28,19 +41,12 @@ namespace Gerenciamento.Data.Repository
             return await Db.Projetos.AsNoTracking().Include(p => p.DataConclusao.Value).ToListAsync();
         }
 
-        public async Task<IEnumerable<Projeto>> ObterProjetosComTarefasEUsuarios()
-        {
-            return await Db.Projetos.AsNoTracking().Include(p => p.Tarefas).Include(p => p.Usuario).ToListAsync();
-        }
 
         public async Task<IEnumerable<Projeto>> ObterProjetosComTarefasPorPrioridade(string prioridade)
         {
             return await Db.Projetos.AsNoTracking().Include(prioridade).ToListAsync();
         }
 
-        public async Task<Projeto> ObterProjetoUsuario(Guid id)
-        {
-            return await Db.Projetos.AsNoTracking().Include(p => p.Usuario).FirstOrDefaultAsync(p => p.Id == id);
-        }
+
     }
 }

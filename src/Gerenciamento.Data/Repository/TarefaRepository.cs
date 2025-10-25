@@ -12,7 +12,9 @@ namespace Gerenciamento.Data.Repository
 
         public async Task<IEnumerable<Tarefa>> ObterTarefas()
         {
-            return await Db.Tarefas.AsNoTracking().Include(t => t.Usuario).ToListAsync();
+            return await Db.Tarefas.AsNoTracking()
+                .Include(t => t.Usuario)
+                .ToListAsync();
         }
 
         public async Task<Tarefa> ObterTarefaProjetoUsuario(Guid id)

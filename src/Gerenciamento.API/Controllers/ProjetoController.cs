@@ -28,22 +28,20 @@ namespace Gerenciamento.API.Controllers
         [Route("consultar-projeto")]
         public async Task<ActionResult<IEnumerable<ProjetoDto>>> ObterTodos()
         {
-            var projetos = await _projetoRepository.ObterProjetos();
-            var projetosDto = _mapper.Map<IEnumerable<ProjetoDto>>(projetos);
+            var projetosDto = _mapper.Map<IEnumerable<ProjetoDto>>(await _projetoRepository.ObterProjetos());
 
             return Ok(projetosDto);
-            
         }
 
         [HttpGet]
         [Route("consultar-projeto/{id:guid}")]
         public async Task<ActionResult<ProjetoDto>> ObterPorId(Guid id)
         {
-            var projetoDto = await ObterProjeto(id);
+            var projetoDto = await _projetoRepository.ObterPorId(id);
 
             if (projetoDto == null) return NotFound();
 
-            return projetoDto;
+            return CustomResponse(HttpStatusCode.OK, projetoDto);
         }
 
         [HttpPost]
@@ -96,7 +94,7 @@ namespace Gerenciamento.API.Controllers
 
         private async Task<ProjetoDto> ObterProjeto(Guid id)
         {
-            return _mapper.Map<ProjetoDto>(await _projetoRepository.ObterProjetoUsuario(id));
+            return _mapper.Map<ProjetoDto>(await _projetoRepository.ObterPorId(id));
         }
     }
 }
