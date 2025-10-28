@@ -32,29 +32,31 @@ namespace Gerenciamento.API.Controllers
 
         [HttpGet]
         [Route("consultar-tarefa")]
-        public async Task<IEnumerable<TarefaDto>> ObterTodos()
+        public async Task<IEnumerable<TarefaRetornoDto>> ObterTodos()
         {
-            return _mapper.Map<IEnumerable<TarefaDto>>(await _tarefaRepository.ObterTarefas());
+            return _mapper.Map<IEnumerable<TarefaRetornoDto>>(await _tarefaRepository.ObterTarefas());
         }
 
         [HttpGet]
         [Route("consultar-tarefa-por-id/{id:guid}")]
-        public async Task<ActionResult<TarefaDto>> ObterPorId(Guid id)
+        public async Task<ActionResult<TarefaRetornoDto>> ObterPorId(Guid id)
         {
-            var tarefasDto = await ObterPorId(id);
+            var tarefas = await _tarefaRepository.ObterPorId(id);
 
-            if (tarefasDto == null) return NotFound();
+            if (tarefas == null) return NotFound();
+
+            var tarefasDto = _mapper.Map<TarefaRetornoDto>(tarefas);
 
             return CustomResponse(HttpStatusCode.OK, tarefasDto);
         }
 
         [HttpPost]
         [Route("adicionar-tarefa")]
-        public async Task<ActionResult<TarefaDto>> Adicionar(CadastroTarefaDto cadastroTarefaDto)
+        public async Task<ActionResult<TarefaDto>> Adicionar(TarefaCadastroDto tarefaCadastroDto)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var usuario = await _usarioRepository.ObterPorId(cadastroTarefaDto.UsuarioId);
+            var usuario = await _usarioRepository.ObterPorId(tarefaCadastroDto.UsuarioId);
 
             if (usuario == null)
             {
@@ -62,11 +64,11 @@ namespace Gerenciamento.API.Controllers
                 return CustomResponse();
             }
 
-            cadastroTarefaDto.NomeUsuario = usuario.Nome;
+            tarefaCadastroDto.NomeUsuario = usuario.Nome;
 
-            await _tarefaService.Adicionar(_mapper.Map<Tarefa>(cadastroTarefaDto));
+            await _tarefaService.Adicionar(_mapper.Map<Tarefa>(tarefaCadastroDto));
 
-            return CustomResponse(HttpStatusCode.Created, cadastroTarefaDto);
+            return CustomResponse(HttpStatusCode.Created, tarefaCadastroDto);
         }
 
         [HttpPut]
@@ -87,7 +89,6 @@ namespace Gerenciamento.API.Controllers
             atualizarTarefaDto.Descricao = tarefaDto.Descricao;
             atualizarTarefaDto.Status = tarefaDto.Status;
             atualizarTarefaDto.Prioridade = tarefaDto.Prioridade;
-            atualizarTarefaDto.DataConclusao = tarefaDto.DataConclusao;
 
             await _tarefaService.Atualizar(_mapper.Map<Tarefa>(atualizarTarefaDto));
 

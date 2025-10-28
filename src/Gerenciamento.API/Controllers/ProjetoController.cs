@@ -2,6 +2,7 @@
 using Gerenciamento.API.DTO;
 using Gerenciamento.Business.Interfaces;
 using Gerenciamento.Business.Models;
+using Gerenciamento.Business.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -46,37 +47,52 @@ namespace Gerenciamento.API.Controllers
 
         [HttpPost]
         [Route("cadastrar-projeto")]
-        public async Task<ActionResult<ProjetoDto>> Adicionar(CadastroProjetoDto cadastroProjetoDto)
+        public async Task<ActionResult<ProjetoDto>> Adicionar(ProjetoCadastroDto projetoCadastroDto)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _projetoService.Adicionar(_mapper.Map<Projeto>(cadastroProjetoDto));
+            await _projetoService.Adicionar(_mapper.Map<Projeto>(projetoCadastroDto));
 
-            return CustomResponse(HttpStatusCode.Created, cadastroProjetoDto);
+            return CustomResponse(HttpStatusCode.Created, projetoCadastroDto);
         }
 
         [HttpPut]
         [Route("atualizar-projeto/{id:guid}")]
-        public async Task<ActionResult<ProjetoDto>> Atualizar(Guid id, ProjetoDto projetoDto)
+        public async Task<ActionResult<ProjetoAtualizarDto>> Atualizar(Guid id, ProjetoAtualizarDto projetoAtualizarDto)
         {
-            if (id != projetoDto.Id)
-            {
-                NotificarErro("Os IDs não são iguais!");
-                return CustomResponse(HttpStatusCode.NoContent);
-            }
-
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var atualizacaoProjeto = await ObterProjeto(id);
-
-            atualizacaoProjeto.UsuarioId = projetoDto.UsuarioId;
-            atualizacaoProjeto.NomeProjeto = projetoDto.NomeProjeto;
-            atualizacaoProjeto.Descricao = projetoDto.Descricao;
-            atualizacaoProjeto.DataConclusao = projetoDto.DataConclusao;
+            if (atualizacaoProjeto == null)
+            {
+                NotificarErro("Projeto não encontrado!");
+                return CustomResponse();
+            }
+            atualizacaoProjeto.UsuarioId = projetoAtualizarDto.UsuarioId;
+            atualizacaoProjeto.NomeProjeto = projetoAtualizarDto.NomeProjeto;
+            atualizacaoProjeto.Descricao = projetoAtualizarDto.Descricao;
+            atualizacaoProjeto.DataFim = projetoAtualizarDto.DataFim;
+            atualizacaoProjeto.DataConclusao = projetoAtualizarDto.DataConclusao;
 
             await _projetoService.Atualizar(_mapper.Map<Projeto>(atualizacaoProjeto));
 
-            return CustomResponse();
+            return CustomResponse(HttpStatusCode.NoContent);
+        }
+
+        [HttpPut]
+        [Route("atualizar-data-conclusao/{id:guid}")]
+        public async Task<ActionResult<ProjetoAtualizarDataConclusaoDto>> AtualizarDataConclusao(Guid id, ProjetoAtualizarDataConclusaoDto projetoAtualizarDataConclusaoDto)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+            var atualizacaoProjeto = await ObterProjeto(id);
+            if (atualizacaoProjeto == null)
+            {
+                NotificarErro("Projeto não encontrado!");
+                return CustomResponse();
+            }
+            atualizacaoProjeto.DataConclusao = projetoAtualizarDataConclusaoDto.DataConclusao;
+            await _projetoService.Atualizar(_mapper.Map<Projeto>(atualizacaoProjeto));
+            return CustomResponse(HttpStatusCode.NoContent);
         }
 
         [HttpDelete]
@@ -85,7 +101,7 @@ namespace Gerenciamento.API.Controllers
         {
             var projeto = await ObterProjeto(id);
 
-            if (projeto != null) return NotFound(); 
+            if (projeto != null) return NotFound();
 
             await _projetoService.Remover(id);
 

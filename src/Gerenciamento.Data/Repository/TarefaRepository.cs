@@ -7,19 +7,31 @@ namespace Gerenciamento.Data.Repository
 {
     public class TarefaRepository : Repository<Tarefa>, ITarefaRepository
     {
-        public TarefaRepository(MeuDbContext context) : base(context) { 
+        public TarefaRepository(MeuDbContext context) : base(context)
+        {
         }
 
         public async Task<IEnumerable<Tarefa>> ObterTarefas()
         {
             return await Db.Tarefas.AsNoTracking()
                 .Include(t => t.Usuario)
+                .Include(t => t.Projeto)
                 .ToListAsync();
+        }
+
+        public async Task<Tarefa> ObterPorId(Guid id)
+        {
+            return await Db.Tarefas.AsNoTracking()
+                .Include(t => t.Usuario)
+                .Include(t => t.Projeto)
+                .FirstOrDefaultAsync(t => t.Id == id);
         }
 
         public async Task<Tarefa> ObterTarefaProjetoUsuario(Guid id)
         {
-            return await Db.Tarefas.AsNoTracking().Include(t => t.Usuario).FirstOrDefaultAsync(t => t.Id == id);
+            return await Db.Tarefas.AsNoTracking()
+                .Include(t => t.Usuario)
+                .FirstOrDefaultAsync(t => t.Id == id);
         }
 
         public async Task<IEnumerable<Tarefa>> ObterTarefasConcluidas()

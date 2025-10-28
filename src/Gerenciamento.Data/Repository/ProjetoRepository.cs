@@ -27,7 +27,7 @@ namespace Gerenciamento.Data.Repository
                 .ToListAsync();
         }
 
-        public async Task<Projeto> ObterPorId(Guid id)
+        public override async Task<Projeto?> ObterPorId(Guid id)
         {
             return await Db.Projetos.AsNoTracking()
                 .Include(p => p.Usuario)
