@@ -6,14 +6,19 @@ namespace Gerenciamento.Business.Interfaces
     {
         Task<IEnumerable<Usuario>> ObterTodosUsuarios();
 
-        Task<Usuario> ObterUsuarioPorEmail(string email);
+        Task<Usuario> ObterPorId(Guid id);
 
-        Task<Usuario> ObterUsuarioComProjetosETarefas(Guid id);
+        Task<Usuario> ObterPorEmail(string email);
 
-        Task<IEnumerable<Usuario>> ObterUsuariosComTarefas();
+        Task<Usuario> ObterComProjetosETarefas(Guid id);
 
-        Task<IEnumerable<Usuario>> ObterUsuariosComProjetosETarefasConcluidas();
+        Task<IEnumerable<Usuario>> ObterComTarefas();
+
+        Task<IEnumerable<Usuario>> ObterComProjetosETarefasConcluidas();
+
         Task Inativar(Guid id);
+
+        Task Atualizar(Usuario entity);
 
     }
 }

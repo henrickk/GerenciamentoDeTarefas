@@ -46,7 +46,11 @@ namespace Gerenciamento.Data.Repository
 
         public virtual async Task Remover(Guid id)
         {
-            DbSet.Remove(new TEntity { Id = id });
+            var entity = await DbSet.FindAsync(id);
+
+            if (entity == null) return; // evita erro se não existir
+
+            DbSet.Remove(entity);
 
             await SaveChanges();
         }

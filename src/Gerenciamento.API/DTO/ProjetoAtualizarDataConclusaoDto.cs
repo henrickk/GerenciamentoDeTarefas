@@ -2,6 +2,6 @@
 {
     public class ProjetoAtualizarDataConclusaoDto
     {
-        public DateTime DataConclusao { get; set; } = DateTime.Now;
+        public DateTime? DataConclusao { get; set; } = DateTime.Now;
     }
 }

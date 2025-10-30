@@ -3,7 +3,6 @@ using Gerenciamento.API.DTO;
 using Gerenciamento.Business.Interfaces;
 using Gerenciamento.Business.Models;
 using Gerenciamento.Business.Services.Security;
-using Gerenciamento.Data.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

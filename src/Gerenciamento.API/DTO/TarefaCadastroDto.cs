@@ -24,7 +24,7 @@ namespace Gerenciamento.API.DTO
         [JsonIgnore]
         public DateTime DataCriacao { get; set; } = DateTime.Now;
         [JsonIgnore]
-        public DateTime DataConclusao { get; set; } = DateTime.Now.AddDays(7);
+        public DateTime? DataConclusao { get; set; } = DateTime.Now.AddDays(7);
 
     }
 }

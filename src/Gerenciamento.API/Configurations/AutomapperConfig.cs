@@ -21,10 +21,18 @@ namespace Gerenciamento.API.Configurations
                     opt => opt.MapFrom(src => src.Usuario != null ? src.Usuario.Nome : string.Empty))
                 .ReverseMap();
 
+            CreateMap<TarefaAtualizarDto, Tarefa>()
+           .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
+
+            CreateMap<Tarefa, TarefaAtualizarDto>()
+                .ForMember(d => d.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.DataConclusao, opt => opt.Ignore())
+                .ForMember(dest => dest.DataConclusao, opt => opt.MapFrom(src => src.DataConclusao == DateTime.MinValue ? null : src.DataConclusao));
+
             // Cadastro de tarefa
             CreateMap<TarefaCadastroDto, Tarefa>()
-                .ForMember(dest => dest.DataConclusao, opt => opt.Ignore())
-                .ForMember(dest => dest.NomeUsuario, opt => opt.Ignore());
+                    .ForMember(dest => dest.DataConclusao, opt => opt.Ignore())
+                    .ForMember(dest => dest.NomeUsuario, opt => opt.Ignore());
 
             // Retorno detalhado de tarefa (por ID)
             CreateMap<Tarefa, TarefaRetornoDto>()

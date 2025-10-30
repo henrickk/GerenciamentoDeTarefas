@@ -2,7 +2,6 @@
 using Gerenciamento.API.DTO;
 using Gerenciamento.Business.Interfaces;
 using Gerenciamento.Business.Models;
-using Gerenciamento.Business.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -38,7 +37,7 @@ namespace Gerenciamento.API.Controllers
         [Route("consultar-projeto/{id:guid}")]
         public async Task<ActionResult<ProjetoDto>> ObterPorId(Guid id)
         {
-            var projetoDto = await _projetoRepository.ObterPorId(id);
+            var projetoDto = _mapper.Map<ProjetoDto>(await _projetoRepository.ObterPorId(id));
 
             if (projetoDto == null) return NotFound();
 
@@ -101,7 +100,7 @@ namespace Gerenciamento.API.Controllers
         {
             var projeto = await ObterProjeto(id);
 
-            if (projeto != null) return NotFound();
+            if (projeto == null) return NotFound();
 
             await _projetoService.Remover(id);
 

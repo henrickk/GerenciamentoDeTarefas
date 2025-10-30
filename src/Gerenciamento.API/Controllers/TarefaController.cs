@@ -71,27 +71,21 @@ namespace Gerenciamento.API.Controllers
             return CustomResponse(HttpStatusCode.Created, tarefaCadastroDto);
         }
 
+
         [HttpPut]
         [Route("atualizar-tarefa/{id:guid}")]
-        public async Task<ActionResult<TarefaDto>> Atualizar(Guid id, TarefaDto tarefaDto)
+        public async Task<ActionResult<TarefaAtualizarDto>> Atualizar(Guid id, TarefaAtualizarDto tarefaAtualizarDto)
         {
-            if (id != tarefaDto.Id)
-            {
-                NotificarErro("Os IDs não são iguais!");
-                return CustomResponse();
-            }
-
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var atualizarTarefaDto = await ObterTarefaProjeto(id);
+            var tarefaDb = await _tarefaRepository.ObterPorId(id);
+            if (tarefaDb == null) return NotFound();
 
-            atualizarTarefaDto.Titulo = tarefaDto.Titulo;
-            atualizarTarefaDto.Descricao = tarefaDto.Descricao;
-            atualizarTarefaDto.Status = tarefaDto.Status;
-            atualizarTarefaDto.Prioridade = tarefaDto.Prioridade;
+            _mapper.Map(tarefaAtualizarDto, tarefaDb);
 
-            await _tarefaService.Atualizar(_mapper.Map<Tarefa>(atualizarTarefaDto));
+            tarefaDb.Id = id;
 
+            await _tarefaService.Atualizar(tarefaDb);
             return CustomResponse(HttpStatusCode.NoContent);
         }
 
@@ -101,7 +95,7 @@ namespace Gerenciamento.API.Controllers
         {
             var tarefa = await ObterTarefaProjeto(id);
 
-            if (tarefa != null) return NotFound();
+            if (tarefa == null) return NotFound();
 
             await _tarefaService.Remover(id);
 

@@ -36,7 +36,17 @@ namespace Gerenciamento.Business.Services
 
         public async Task Inativar(Guid id)
         {
-            await _usuarioRepository.Inativar(id);
+            var usuario = await _usuarioRepository.ObterPorId(id);
+
+            if (usuario == null)
+            {
+                Notificar("Usuário não encontrado.");
+                return;
+            }
+
+            usuario.Ativo = false;
+
+            await _usuarioRepository.Atualizar(usuario);
         }
 
         public void Dispose()
