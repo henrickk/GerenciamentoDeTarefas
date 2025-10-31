@@ -36,17 +36,24 @@ namespace Gerenciamento.Data.Repository
 
         public async Task<IEnumerable<Tarefa>> ObterTarefasConcluidas()
         {
-            return await Db.Tarefas.AsNoTracking().Include(t => t.DataConclusao).ToListAsync();
+            return await Db.Tarefas.AsNoTracking()
+                .Where(t => t.DataConclusao != null)
+                .ToListAsync();
+
         }
 
         public async Task<IEnumerable<Tarefa>> ObterTarefasPendentes()
         {
-            return (IEnumerable<Tarefa>)Db.Tarefas.AsNoTracking().Include(t => t.DataCriacao == null).ToListAsync();
+            return await Db.Tarefas.AsNoTracking()
+                .Where(t => t.DataConclusao == null)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Tarefa>> ObterTarefasPorStatus(string status)
         {
-            return await Db.Tarefas.AsNoTracking().Include(status).ToListAsync();
+            return await Db.Tarefas.AsNoTracking()
+                .Where(t => t.Status == status)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Tarefa>> ObterTarefasPorUsuario(Guid usuarioId)

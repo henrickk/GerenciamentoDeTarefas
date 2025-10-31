@@ -30,10 +30,6 @@ namespace Gerenciamento.Data.Mapping
                 .IsRequired()
                 .HasColumnType("datetime");
 
-            builder.Property(t => t.DataConclusao)
-                .IsRequired(false)
-                .HasColumnType("datetime");
-
             builder.HasOne(t => t.Projeto)
                 .WithMany(p => p.Tarefas)   
                 .HasForeignKey(t => t.ProjetoId);

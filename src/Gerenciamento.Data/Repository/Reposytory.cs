@@ -48,7 +48,7 @@ namespace Gerenciamento.Data.Repository
         {
             var entity = await DbSet.FindAsync(id);
 
-            if (entity == null) return; // evita erro se não existir
+            if (entity == null) return;
 
             DbSet.Remove(entity);
 

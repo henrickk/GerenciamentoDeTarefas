@@ -38,13 +38,17 @@ namespace Gerenciamento.Data.Repository
 
         public async Task<IEnumerable<Projeto>> ObterProjetosComTarefasConcluidas()
         {
-            return await Db.Projetos.AsNoTracking().Include(p => p.DataConclusao.Value).ToListAsync();
+            return await Db.Projetos.AsNoTracking()
+                .Where(p => p.DataConclusao != null)
+                .ToListAsync();
         }
-
 
         public async Task<IEnumerable<Projeto>> ObterProjetosComTarefasPorPrioridade(string prioridade)
         {
-            return await Db.Projetos.AsNoTracking().Include(prioridade).ToListAsync();
+            return await Db.Projetos.AsNoTracking()
+                .Where(p => p.Tarefas.Any(t => t.Prioridade == prioridade))
+                .Include(p => p.Tarefas)
+                .ToListAsync();
         }
 
 

@@ -17,6 +17,8 @@ namespace Gerenciamento.Data.Mapping
             builder.Property(u => u.Email)
                 .IsRequired()
                 .HasColumnType("varchar(200)");
+
+            builder.HasIndex(u => u.Email).IsUnique();
          
             builder.Property(u => u.SenhaHash)
                 .IsRequired()

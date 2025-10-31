@@ -16,22 +16,29 @@ namespace Gerenciamento.Data.Repository
 
         public async Task<Usuario> ObterPorId(Guid id)
         {
-            return await Db.Usuarios.AsNoTracking().FirstAsync(u => u.Id == id);
+            return await Db.Usuarios.AsNoTracking()
+                .FirstAsync(u => u.Id == id);
         }
 
         public async Task<Usuario> ObterPorEmail(string email)
         {
-            return Db.Usuarios.AsNoTracking().FirstOrDefault(u => u.Email == email);
+            return await Db.Usuarios.AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<Usuario> ObterComProjetosETarefas(Guid id)
         {
-            return await Db.Usuarios.AsNoTracking().Include(u => u.Projetos).Include(u => u.Tarefas).FirstOrDefaultAsync();
+            return await Db.Usuarios.AsNoTracking()
+                .Include(u => u.Projetos)
+                .Include(u => u.Tarefas)
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<IEnumerable<Usuario>> ObterComTarefas()
         {
-            return await Db.Usuarios.AsNoTracking().Include(u => u.Tarefas).ToListAsync();
+            return await Db.Usuarios.AsNoTracking()
+                .Include(u => u.Tarefas)
+                .ToListAsync();
         }
 
         public Task<IEnumerable<Usuario>> ObterComProjetosETarefasConcluidas()
@@ -42,7 +49,7 @@ namespace Gerenciamento.Data.Repository
         public async Task Inativar(Guid id)
         {
             var entity = await Db.Usuarios.FindAsync(id);
-            if (entity == null) return; // ou Notificar
+            if (entity == null) return;
 
             entity.Ativo = false;
             await SaveChanges();

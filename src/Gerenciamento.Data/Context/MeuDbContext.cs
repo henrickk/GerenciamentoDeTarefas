@@ -38,10 +38,6 @@ namespace Gerenciamento.Data.Context
                 .Property(t => t.DataConclusao)
                 .HasColumnType("date");
 
-            modelBuilder.Entity<Tarefa>()
-                .Property(t => t.DataConclusao)
-                .HasColumnType("date");
-
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(MeuDbContext).Assembly);
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
@@ -51,7 +47,6 @@ namespace Gerenciamento.Data.Context
 
             base.OnModelCreating(modelBuilder);
         }
-
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

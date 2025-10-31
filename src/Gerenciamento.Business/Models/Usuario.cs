@@ -1,6 +1,4 @@
-﻿using Gerenciamento.Business.Models;
-
-namespace Gerenciamento.Business.Models
+﻿namespace Gerenciamento.Business.Models
 {
     public class Usuario : Entity
     {
